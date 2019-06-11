@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/questions.dart';
 import '../utils/quiz.dart';
 import '../UI/answer_button.dart';
+import '../UI/questions_texts.dart';
+import '../UI/correct_wrong_overlay.dart';
 
 class QuizPage extends StatefulWidget {
 
@@ -11,25 +13,59 @@ class QuizPage extends StatefulWidget {
 
 class QuizPageState extends State<QuizPage> {
 
+  Question currentQuestion;
+  Quiz quiz = new Quiz([
+    new Question("O Cake é a melhor framework PHP do mundo?", false),
+    new Question("Ruby on Rails é a melhor framework de todas?", true),
+    new Question("O Maestro é bem feito?", false),
+    new Question("O Cake é a melhor framework PHP do mundo?", false),
+    new Question("A Cris nunca mentiu pra um cliente?", true),
+  ]);
+
+  String questionText;
+  int questionNumber;
+  bool isCorrect;
+  bool overlayShouldBeVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    currentQuestion = quiz.nextQuestion;
+    questionText = currentQuestion.question;
+    questionNumber = quiz.questionNumber;
+  }
+
+  void handleAnswer(bool answer) {
+    isCorrect = (currentQuestion.answer == answer);
+    quiz.answer(isCorrect);
+    this.setState(() {
+      overlayShouldBeVisible = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         new Column( // this is our main page
           children: <Widget>[
-            new AnswerButton(true, () => print("Apertou verdadeiro. ERROU!!!")),
-            new Material(
-              color: Colors.white,
-              child: new Padding(
-                padding: new EdgeInsets.symmetric(vertical: 13.0, horizontal: 8.0),
-                child: new Center(
-                  child: new Text("O Cake é o melhor Framework PHP de todos?", style: new TextStyle(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.bold)),
-                ),
-              )
-            ),
-            new AnswerButton(false, () => print("Apertou falso. ACERTOUUU!!!")),
+            new AnswerButton(true, () => handleAnswer(true)), // true button
+            new QuestionText(questionText, questionNumber),
+            new AnswerButton(false, () => handleAnswer(false)), // false button
           ]
         ),
+        overlayShouldBeVisible == true ? new CorrectWrongOverlay(
+          isCorrect,
+          () {
+            currentQuestion = quiz.nextQuestion;
+            this.setState(() {
+              overlayShouldBeVisible = false;
+              questionText = currentQuestion.question;
+              questionNumber = quiz.questionNumber;
+            });
+          }
+          ) : new Container(),
       ],
     );
   }
