@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import './quiz_page.dart';
 
 class LandingPage extends StatelessWidget {
 
@@ -9,14 +9,12 @@ class LandingPage extends StatelessWidget {
     return new Material(
       color: Colors.greenAccent,
       child: new InkWell(
-        onTap: () => {
-          print("Screen touch!"),
-        },
+        onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new QuizPage())),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text("First App", style: new TextStyle(color: Colors.white, fontSize: 50.0, fontWeight: FontWeight.bold)),
-            new Text("Material dart", style: new TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold))
+            new Text("Eu amo muito Mozão <3", style: new TextStyle(color: Colors.white, fontSize: 50.0, fontWeight: FontWeight.bold)),
+            new Text("By: Noivo <3", style: new TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold))
           ],
         ),
       )

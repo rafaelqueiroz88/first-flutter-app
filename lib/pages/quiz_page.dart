@@ -15,11 +15,11 @@ class QuizPageState extends State<QuizPage> {
 
   Question currentQuestion;
   Quiz quiz = new Quiz([
-    new Question("O Cake é a melhor framework PHP do mundo?", false),
-    new Question("Ruby on Rails é a melhor framework de todas?", true),
-    new Question("O Maestro é bem feito?", false),
-    new Question("O Cake é a melhor framework PHP do mundo?", false),
-    new Question("A Cris nunca mentiu pra um cliente?", true),
+    new Question("É verdade que vamos viajar no final do ano?", true),
+    new Question("É verdade que mozão me ama mais que eu amo mozão?", false),
+    new Question("É verdade que tenho a noiva mais gata do mundo?", true),
+    new Question("É verdade que o Sheldon é mais bonito que o Bart?", false),
+    new Question("É verdade que nos vamos ter um Salsichinha?", true),
   ]);
 
   String questionText;
